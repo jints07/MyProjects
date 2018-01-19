@@ -1,0 +1,15 @@
+rm(list=ls())
+setwd("/media/jintu/Local Data/Work/MyProjects/Advanced Macro - Topics/HW5");
+data<- read.csv(file="wrds_data.csv",header=TRUE,sep=",");
+
+gvkey = unlist(data['gvkey']);
+fyear = unlist(data['fyear']);
+revt = unlist(data['revt']);
+xrd = unlist(data['xrd']);
+
+## Replace missing values with zero in xrd
+xrd[which(is.na(xrd))] = 0;
+
+## Remove firms with negative revt or xrd values
+del_gvkeys <- unique(gvkey[which(xrd<0 | revt<0)]);
+del_ind <- which(gvkey %in% del_gvkeys);

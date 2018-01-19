@@ -1,0 +1,503 @@
+Y
+X
+Y
+X
+Y
+X
+X[1:end-1].*X[2:end]
+mean(X[1:end-1].*X[2:end])
+1.35*1.8
+mean(X[1:end-2].*X[3:end])
+T,Z,Q,H = Kalman(params,w)
+T
+params
+Z
+Q
+H
+T,Z,Q,H = Kalman(params,w)
+T
+params
+Q
+Z
+H
+ ll = 0;
+    αt,Pt =  α0,P0;    
+   
+i=1
+ αtt_1 = T*αt;
+        Ptt_1 = T*Pt*T' + Q;
+        Ft = Z*Ptt_1*Z' + H;
+        vt = Y[i] - Z*αtt_1;
+        αt = αtt_1 + Ptt_1*Z'*(Ft\eye(size(Ft,1)))*vt;
+        Pt = Ptt_1 - Ptt_1*Z'*(Ft\eye(size(Ft,1)))*Z*Ptt_1;
+        ll = ll +(0.5*log((length(Ft)>1? det(Ft): Ft[1]))+0.5*vt'*(Ft\eye(size(Ft,1)))*vt)[1];
+Pt
+Ft
+T
+w
+αtt_1
+αt
+α0=x0
+ αtt_1 = T*αt;
+        Ptt_1 = T*Pt*T' + Q;
+        Ft = Z*Ptt_1*Z' + H;
+        vt = Y[i] - Z*αtt_1;
+        αt = αtt_1 + Ptt_1*Z'*(Ft\eye(size(Ft,1)))*vt;
+        Pt = Ptt_1 - Ptt_1*Z'*(Ft\eye(size(Ft,1)))*Z*Ptt_1;
+        ll = ll +(0.5*log((length(Ft)>1? det(Ft): Ft[1]))+0.5*vt'*(Ft\eye(size(Ft,1)))*vt)[1];
+ll
+Pt
+Pt=P0
+ αtt_1 = T*αt;
+        Ptt_1 = T*Pt*T' + Q;
+        Ft = Z*Ptt_1*Z' + H;
+        vt = Y[i] - Z*αtt_1;
+        αt = αtt_1 + Ptt_1*Z'*(Ft\eye(size(Ft,1)))*vt;
+        Pt = Ptt_1 - Ptt_1*Z'*(Ft\eye(size(Ft,1)))*Z*Ptt_1;
+        ll = ll +(0.5*log((length(Ft)>1? det(Ft): Ft[1]))+0.5*vt'*(Ft\eye(size(Ft,1)))*vt)[1];
+Pt
+αtt_1
+αt
+α0
+ T,Z,Q,H = Kalman(params,w);
+    ll = 0;
+    αt,Pt =  α0,P0;    
+   
+αt
+Pt
+i=1
+     αtt_1 = T*αt;
+        Ptt_1 = T*Pt*T' + Q;
+        Ft = Z*Ptt_1*Z' + H;
+        vt = Y[i] - Z*αtt_1;
+        αt = αtt_1 + Ptt_1*Z'*(Ft\eye(size(Ft,1)))*vt;
+        Pt = Ptt_1 - Ptt_1*Z'*(Ft\eye(size(Ft,1)))*Z*Ptt_1;
+        ll = ll +(0.5*log((length(Ft)>1? det(Ft): Ft[1]))+0.5*vt'*(Ft\eye(size(Ft,1)))*vt)[1];
+   
+Pt
+αt
+Y[1]
+vt
+Ft
+Ptt_1
+mean(X[1:end-1].*X[2:end])
+mean(X[1:end-1].*X[2:end])
+mean(X[1:end-2].*X[3:end])
+mean(X[1:end])
+mean(X[1:end-2].*X[3:end])
+mean(X[1:end-1].*X[2:end])
+ γ = [1 w.γ];
+
+    ndiscard = 100; # Discard first few simulated values
+    ε = randn(n+ndiscard);
+    ma_coeff = reverse(vec(γ));
+    X = zeros(length(ε));
+   
+γ
+w.γ
+w
+w.x.γ
+ γ = [1 w.x.γ];
+γ
+
+    ndiscard = 100; # Discard first few simulated values
+    ε = randn(n+ndiscard);
+    ma_coeff = reverse(vec(γ));
+    X = zeros(length(ε));
+   
+γ
+ma_coeff
+ε
+i
+i=3
+ε[i-length(γ)+1:i]
+ε[1:3]
+ma_coeff.*ε[i-length(γ)+1:i]
+sum(ma_coeff.*ε[i-length(γ)+1:i])
+mean(ε)
+mean(ε[1:end-1].*ε[2:end])
+mean(X[1:end-1].*X[2:end])
+.8*1.5
+mean(X[1:end-1].*X[2:end])
+mean(X[1:end-2].*X[3:end])
+mean(X[1:end-2].*X[3:end])
+mean(X[1:end-1].*X[2:end])
+γ
+mean(X[1:end-1].*X[2:end])
+mean(X[1:end-2].*X[3:end])
+γhat
+γhat
+para,ms
+params
+params
+γhat
+params
+params =  vec([γhat;σ_δhat])
+params
+asr.minimizer
+P0
+x0
+Q
+α0=x0
+    T,Z,Q,H = Kalman(params,w);
+    ll = 0;
+    αt,Pt =  α0,P0;    
+
+Pt
+αt
+Q
+T
+w
+T
+workspace()
+T
+Results of Optimization Algorithm
+X
+Y
+X
+Y
+LL
+using Gadfly
+LL
+maximum(LL)
+max(2,10)
+max(2,1)
+0.01:.01:.95
+w
+    T,Z,Q,H = Kalman(params,w)
+T
+params
+X
+Y
+X
+X
+Y
+X=Y
+X==Y
+X==Y
+σ_εhat
+rand(1)
+LogLike(x,w,x0,P0,Y)
+LogLike(params,w,x0,P0,Y)
+LogLike(params,w,x0,P0,Y)
+w.σ_ε
+w
+w.x.σ_ε
+kalman1(params,w.x)
+LogLike(params,w,x0,P0,Y)
+[1]
+[1.0]
+1.0
+eye(2)
+kalman1(params,w.x)
+t,q,z=kalman1(params,w.x)
+t
+q
+z
+eye(1)
+zeros(3)
+a=reshape([1],1,1)
+zeros(a)
+t,q,z=kalman1(params,w.x)
+t
+q
+z
+[1.0 2]
+eye(1)
+"ewewe","wewewe"
+["ewewe","wewewe"]
+string("ewewe","wewewe")
+raw_asm
+csv.read(string(DataFolder,"ASM_Millons.csv"))
+CSV.read(string(DataFolder,"ASM_Millons.csv"))
+using DataStreams
+workspace()
+using DataStreams
+CSV.read(string(DataFolder,"ASM_Millons.csv"))
+csv.read(string(DataFolder,"ASM_Millons.csv"))
+using CSV
+CSV.read(string(DataFolder,"ASM_Millons.csv"))
+CSV.read(string(DataFolder,"ASM_Millons.csv"))
+raw_asm
+raw_asm
+typeof(raw_asm)
+raw_asm[1]
+names(raw_asm)
+size(raw_asm)
+head(raw_asm)
+using DataFrames
+head(raw_asm)
+raw_asm[; symbol("1995")]
+raw_asm[:, symbol("1995")]
+raw_asm[:, "1995"]
+symbol("1212")
+Symbol("1212")
+raw_asm[:, Symbol("1995")]
+raw_asm
+raw_asm
+raw_asm
+head(raw_asm)
+raw_asm
+head(raw_asm)
+head(raw_asm)
+head(raw_asm)
+head(raw_asm)
+head(raw_asm)
+head(raw_asm)
+cols(raw_asm)
+showcols(raw_asm)
+raw_asm
+raw_asm
+showcols(raw_asm)
+typeof(raw_asm)
+raw_asm[2]
+raw_asm[1995]
+raw_asm["1995"]
+raw_asm[:,Symbol("1995")]
+raw_asm[:,Symbol("1995")]+0.0
+raw_asm[21,Symbol("1995")]
+raw_asm[21,Symbol("1995")]+0.0
+{Int64}(raw_asm[21,Symbol("1995")])
+raw_asm[2]
+dropnull(raw_asm[2])
+isna(raw_asm[2])
+isna.(raw_asm[2])
+raw_asm[2]
+raw_asm[:,Symbol"1995"]
+raw_asm[:,Symbol("1995")]
+isna(raw_asm[:,Symbol("1995")])
+isna(raw_asm[:,Symbol("1995")])
+isnull(raw_asm[:,Symbol("1995")])
+raw_asm[1,Symbol("1995")]
+using DataFramesMeta
+raw_asm[1gk,Symbol("1995")]
+P
+Pkg.add("DatFramesMeta")
+Pkg.add("DataFramesMeta")
+using DataFramesMeta
+isna(raw_asm[2])
+dropmissing(raw_asm)
+raw_asm
+raw_asm
+complete_cases(raw_asm)
+complete_cases(raw_asm[3])
+raw_asm[3]
+raw_asm[1,3]
+{Int64}raw_asm[1,3]
+raw_asm
+raw_asm
+raw_asm[2]
+asm1
+asm1[1]
+asm1[2]
+parse(asm1[2])
+names(asm1)
+convert(Array{Float64},asm1)
+convert(Array{Float64},raw_asm)
+asm1[2,2]
+parse(asm1[2,2])
+parse("-")
+typeof(parse(asm1[2,2]))
+k_ss
+1:190
+1:10
+c(1:10)
+vec(1:10)
+a=linspace(1,5,5)
+a
+a[3]
+[a 7]
+[a' 7.0]
+a'
+k_ss
+k_ss
+partitions
+0:0.02*k_ss:0.1*k_ss
+0.2*k_ss:0.1*k_ss:2*k_ss
+[0:0.02*k_ss:0.1*k_ss 0.2*k_ss:0.1*k_ss:2*k_ss]
+partitions
+searchsortedfirst(partitions,1)
+searchsortedfirst(partitions,0)
+searchsortedfirst(partitions,-1)
+searchsortedfirst(partitions,0.2)
+searchsortedfirst(partitions,0.000000000001)
+partitions
+nodes
+θ = ones(length(partitions),1)
+ψlhs(2,θ,5)
+ψlhs(2,θ,15)
+nodes
+2-[3 4]
+2-[3 4]./[4 5]
+(2-[3 4])./[4 5]
+partitions
+(2-[3 4])./4
+(2-[3 4])/4
+ψdownrhs([2 4 7],θ,5)
+ψdownrhs([2 4 7],θ,15)
+partitions
+nodes[2:end]
+nodes
+res(θ)
+res(θ)
+ψuplhs([2 3],θ,4)
+ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1])
+ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]
+jmid = searchsortedfirst(nodes,0);
+ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]
+ψuplhs(knodes[1:jmid-1],θ,j)/θ1[j-1]
+ψuplhs(knodes[1:jmid-1],θ,2)/θ1[2-1]
+ψuplhs(knodes[1:jmid-1],θ,2)/θ[2-1]
+res(θ)
+res(θ)
+nodes
+res(θ)
+res(θ)
+res(θ)
+res(θ)
+res(θ)
+res(θ)
+jmid
+nodes
+partitions
+res(θ)
+j
+j=2;
+jmid
+knodes = ((nodes+1)*(partitions[j+1]-partitions[j-1])/2 + partitions[j-1]);
+        kweights = weights*(partitions[j+1]-partitions[j-1])/2;
+knodes
+kweights
+resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]).*map(x->R(x,        θ1),knodes[1:jmid-1])) + sum((ψdownrhs(knodes[jmid:end],θ1,j)/θ1[j-1])       .*map(x->R(x,θ1),knodes[jmid:end]));
+resvec
+resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]).*map(x->R(x,        θ1),knodes[1:jmid-1])) + sum((ψdownrhs(knodes[jmid:end],θ1,j)/θ1[j-1])       .*map(x->R(x,θ1),knodes[jmid:end]))
+θ1=θ
+resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]).*map(x->R(x,        θ1),knodes[1:jmid-1])) + sum((ψdownrhs(knodes[jmid:end],θ1,j)/θ1[j-1])       .*map(x->R(x,θ1),knodes[jmid:end]))
+resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]).*map(x->R(x,        θ1),knodes[1:jmid-1])) 
+resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1])
+)
+    resvec = zeros(length(partitions)-1,1);
+resvec
+resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]))
+resvec
+resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]).*map(x->R(x,        θ1),knodes[1:jmid-1])) 
+resvec[j-1] = *map(x->R(x,θ1),knodes[1:jmid-1])
+resvec[j-1] = map(x->R(x,θ1),knodes[1:jmid-1])
+map(x->R(x,θ1),knodes[1:jmid-1])
+map(x->R(x,θ1),knodes[1:jmid-1])
+θ1
+knodes
+map(x->R(x,θ1),knodes[1:jmid-1])
+knodes[1:jmid-1]
+θ
+θ1
+R(2,θ1)
+map(x->R(x,θ1),[2 3])
+knodes[1:jmid-1]
+map(x->R(x,θ1),knodes[1:2])
+R(knodes[1],θ1)
+knodes[1]
+R(.00746,θ1)
+`resvec[j-1] = sum((ψuplhs(knodes[1:jmid-1],θ1,j)/θ1[j-1]).*map(x->R(x,        θ1),knodes[1:jmid-1])
+R(2.0,θ)
+R(2.0343434,θ)
+R(0.0343434,θ)
+k=0.034
+(β*c(k,θ)*(α*A*(A*k^α + (1-δ)*k - c(k,θ))^(α-1) + 1-δ))
+(β*c(k,θ)*(α*A*(A*k^α + (1-δ)*k)
+)
+(β*c(k,θ)*(α*A*(A*k^α + (1-δ)*k))
+c(k,θ)
+partitions
+θ
+res(θ)
+partitions
+j
+j=20;
+knodes = ((nodes+1)*(partitions[j+1]-partitions[j-1])/2 + partitions[j-1]);
+        kweights = weights*(partitions[j+1]-partitions[j-1])/2;
+        
+knodes
+kweights
+map(x->R(x,θ1),knodes[jmid:end])
+map(x->R(x,θ1),knodes[1:jmid-1])
+knodes[jmid:end]
+knodes
+partitions[21]
+nodes
+map(x->R(x,θ1),knodes[jmid:end-1])
+map(x->R(x,θ1),knodes[jmid:end])
+knodes[end]
+ψdownrhs(knodes[end],θ,searchsortedfirst(partitions,knodes[end])-1)
+R(knodes[end],θ)
+c(knodes[end],θ)
+A*knodes[end]^α + (1-δ)*knodes[end] - c(knodes[end],θ)
+partitions
+searchsortedfirst(partitions,k_ss)
+A*paritions[searchsortedfirst(partitions,k_ss):end]^α
+A*partitions[searchsortedfirst(partitions,k_ss):end]^α
+A*partitions[searchsortedfirst(partitions,k_ss):end].^α
+map(x-> A*x^α + -δ*x - 0.0001, partitions[searchsortedfirst(partitions,k_ss):end])
+map(x-> A*x^α + -δ*x - 0.0001, partitions[searchsortedfirst(partitions,k_ss):end])
+a=1
+a>1 ? θ[a]: 0
+a=2
+a>1 ? θ[a]: 0
+θstart
+res(θ)
+j
+ψdownrhs(knodes[jmid:end],θ1,j)
+map(x->R(x,θ1),knodes[jmid:end])
+map(x->c(x,θ1),knodes[jmid:end])
+res(θstart)
+res(θstart)
+res(θstart)
+res(θstart)
+θoptimal.zero
+res(θoptimal.zero)
+θoptimal.zero
+θstart
+θstart
+maximum(θstart,4*ones(length(θstart),1))
+4*ones(length(θstart),1)
+4*ones(length(θstart))
+maximum(θstart,4*ones(length(θstart)))
+max(θstart,4*ones(length(θstart)))
+min(θ1,A*partitions[2:end].^α + (1-δ)*partitions[2:end])
+A*partitions[2:end].^α + (1-δ)*partitions[2:end]
+θ1
+A*partitions[2:end].^α + (1-δ)*partitions[2:end]
+min(θstart,A*partitions[2:end].^α + (1-δ)*partitions[2:end])
+res(θoptimal.zero)
+qoptimal.zero
+θoptimal.zero
+min(θoptimal.zero,A*partitions[2:end].^α + (1-δ)*partitions[2:end])
+min(θoptimal.zero,A*partitions[2:end].^α + (1-δ)*partitions[2:end])-θoptimal.zero
+θoptimal.zero
+θoptimal.zero-A*partitions[2:end].^α + (1-δ)*partitions[2:end]
+θoptimal.zero-(A*partitions[2:end].^α + (1-δ)*partitions[2:end])
+knext(partitions[15],θoptimal.zero[14)]
+knext(partitions[15],θoptimal.zero[14])
+k_next(partitions[15],θoptimal.zero[14])
+k_next(partitions[15],θoptimal.zero)
+k_ss
+θoptimal.zero
+res(θoptimal.zero)
+θoptimal.zero
+t=θoptimal.zero
+t[2]=2.3
+res(t)
+Pkg.update("ForwardDiff")
+partitions[2]
+nodes
+θstart
+θstart
+θstart
+map(x-> A*x^α + -δ*x + 0.0001, partitions[searchsortedfirst(partitions,k_ss):end])
+map(x-> A*x^α  -δ*x + 0.0001, partitions[searchsortedfirst(partitions,k_ss):end])
+max(2,[2 3])
+max(2,[1 3])
+θstart
+θstart
+k_ss
+partitions

@@ -1,0 +1,606 @@
+partitions
+k_ss
+k_next
+partitions
+partitions
+θstart
+θstart
+α*β*A*partitions[2]^α
+partitions
+α*β*A*partitions[3]^α
+α*β*A*partitions[6]^α
+α*β*A*partitions[10]^α
+α*β*A*partitions[15]^α
+α*β
+(1-α*β)*A*partitions[15]^α
+(1-α*β)*A*partitions[13]^α
+(1-α*β)*A*partitions[12]^α
+(1-α*β)*A*partitions[2]^α
+A*partitions[2]^α
+k_ss
+partitions
+nodes
+partitions
+partitions
+nodes
+nodes
+partitions
+partitions
+partitions
+partitoins
+partitions
+partitions
+partitions
+partitions
+searchsortedfirst(partitions,k_ss)
+partitions
+k_ss
+θoptimal.zero[searchsortedfirst(partitions,k_ss)-1]
+θoptimal.zero
+θoptimal
+partitions
+q
+workspace()
+a
+w
+actual = vec([γ;σ_ε;σ_δ])
+f(params)
+f(asr.minimizer)
+f(vec([γ;σ_ε;asr.minimizer[end]]))
+f(vec([γ;σ_ε;0]))
+f(vec([γ;σ_ε;0.0]))
+f(actual)
+γhat
+γhat=0.1
+γhat
+γhat=.8
+γhat=1.9
+γhat=.948
+γhat=1.948
+γhat=1.948
+ρ
+π_stationary
+π_stationary_var
+P_z
+c
+a=Normal(0,2);
+rand(a,100)
+sum(rand(a,100)^2)
+sum(rand(a,100).^2)
+π_stationary_var
+σ_ϵ/(sqrt(1-ρ^2)
+)
+1:1:5
+vec(1:1:5)
+1:1:5;
+[1:1:5;]
+z_array
+z_array
+z_array
+z_array
+π_stationary_var
+c
+P_z
+d
+z_array
+σ_ϵ/(sqrt(1-ρ^2))
+P_z
+z_array[1]
+z_array[1]+d/2-ρ*z_array[i]
+z_array[1]+d/2-ρ*z_array[1]
+cdf(ϵ,z_array[1]+d/2-ρ*z_array[i])
+cdf(ϵ,z_array[1]+d/2-ρ*z_array[1])
+ϵ
+a
+P_z
+c
+h_grid
+k_grid
+iter
+Valuefn
+k_policy
+h_policy
+k_next_policy
+k_ss
+k_ss
+β
+k_ss
+k_ss
+k_ss
+k_ss
+# BELLMAN ITERATION
+k_ss
+k_max
+k_grid
+h_policy
+Valuefn
+β
+h_grid
+Valuefn
+println(k_grid)
+println(k_grid[2])
+k_grid
+continuation_value(1,k_grid,Continuation_Valuefn,4)
+continuation_value(2,k_grid,Continuation_Valuefn,4)
+continuation_value(3,k_grid,Continuation_Valuefn,4)
+continuation_value
+continuation_value = zeros(length(h_grid))
+k_grid
+k_grid
+k_max
+k_ss
+k_ss
+k_ss
+h_ss
+k_max
+h_grid
+z_array
+m
+σ_ϵ
+d
+-m*σ_ϵ/sqrt(1-ρ^2)
+-m*σ_ϵ/sqrt(1-ρ^2)
+-m*σ_ϵ/sqrt(1-ρ^2)+d*(len_z_array-1)
+-m*σ_ϵ/sqrt(1-ρ^2): d :-m*σ_ϵ/sqrt(1-ρ^2)+d*(len_z_array-1)
+[-m*σ_ϵ/sqrt(1-ρ^2): d :-m*σ_ϵ/sqrt(1-ρ^2)+d*(len_z_array-1);]
+[1:1:4;]
+[1: 1 :4;]
+P_z
+c
+k_max
+k_grid
+Valuefn
+issorted(Valuefn)
+issorted(Valuefn[:,1])
+Valuefn[:,1]
+size(Valuefn,1)
+issorted(Valuefn[1,:])
+issorted(Valuefn[1,:])==false
+!issorted(Valuefn[1,:])
+!issorted(Valuefn[1,:]) || !issorted(Valuefn[:,1])
+Valuefn
+Valuefn
+Valuefn
+Continuation_Valuefn = zeros(size(Valuefn));
+for i in 1:size(Valuefn,1)
+    for j in 1:size(Valuefn,2)
+        Continuation_Valuefn[i,j] = β*P_z[j,:]'*Valuefn[i,:];
+    end
+end
+
+CheckIsSorted(Continuation_Valuefn)
+Continuation_Valuefn
+Valuefn_Next = zeros(size(Valuefn));
+for i in 1:size(Valuefn,1)
+    for j in 1:size(Valuefn,2)
+        c = zeros(length(h_grid)); # Current consumption choices for each 'h'
+        k_next = zeros(length(h_grid)); # Next period capital for each 'h'
+        continuation_value = zeros(length(h_grid)); # Expected continuation value
+        total_utility = zeros(length(h_grid)); # Sum of current period utility and continuation value
+        for l in 1:length(h_grid)
+            c[l] = ((1-θ)*(1-h_grid[l])*(k_grid[i]^θ)*exp(z_array[j]*(1-θ))*h_grid[l]^(-1*θ))/ψ; # consumption from labor-leisure condition
+            k_next[l] = ((k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ)) + (1-δ)*k_grid[i] - c[l])/((1+γ_n)*(1+γ_z)); # next period capital from resource constraint
+            if k_next[l]>=((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z))
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+               #=
+               if k_next[l]<k_grid[1]
+                  continuation_value[l] = (k_next[l]/k_grid[1])*Continuation_Valuefn[1,j];
+               elseif k_next[l]>=k_grid[1] && k_next[l]<last(k_grid)
+                      ind = last(find(x->(x <= k_next[l]),k_grid));
+                      continuation_value[l] = ((k_next[l]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+                      + ((k_grid[ind+1]-k_next[l])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+               elseif k_next[l]>=last(k_grid)
+                      continuation_value[l] = Continuation_Valuefn[length(k_grid),j];
+               end
+                =#
+            else
+                #continuation_value[l] = -Inf;
+                ## Non-negative investment x_t>=0
+                k_next[l] = ((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z));
+                c[l] = (k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ));
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+            end
+        end
+        for l in 1:length(h_grid)
+        total_utility[l] = log(c[l]) + ψ*log(h_grid[l]) + continuation_value[l];
+        end
+        Valuefn_Next[i,j] = maximum(total_utility);
+    end
+end
+
+Valuefn_Next
+i,j=3,1
+i
+j
+        c = zeros(length(h_grid)); # Current consumption choices for each 'h'
+        k_next = zeros(length(h_grid)); # Next period capital for each 'h'
+        continuation_value = zeros(length(h_grid)); # Expected continuation value
+        total_utility = zeros(length(h_grid)); # Sum of current period utility and continuation value
+        for l in 1:length(h_grid)
+            c[l] = ((1-θ)*(1-h_grid[l])*(k_grid[i]^θ)*exp(z_array[j]*(1-θ))*h_grid[l]^(-1*θ))/ψ; # consumption from labor-leisure condition
+            k_next[l] = ((k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ)) + (1-δ)*k_grid[i] - c[l])/((1+γ_n)*(1+γ_z)); # next period capital from resource constraint
+            if k_next[l]>=((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z))
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+               #=
+               if k_next[l]<k_grid[1]
+                  continuation_value[l] = (k_next[l]/k_grid[1])*Continuation_Valuefn[1,j];
+               elseif k_next[l]>=k_grid[1] && k_next[l]<last(k_grid)
+                      ind = last(find(x->(x <= k_next[l]),k_grid));
+                      continuation_value[l] = ((k_next[l]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+                      + ((k_grid[ind+1]-k_next[l])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+               elseif k_next[l]>=last(k_grid)
+                      continuation_value[l] = Continuation_Valuefn[length(k_grid),j];
+               end
+                =#
+            else
+                #continuation_value[l] = -Inf;
+                ## Non-negative investment x_t>=0
+                k_next[l] = ((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z));
+                c[l] = (k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ));
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+            end
+        end
+        for l in 1:length(h_grid)
+        total_utility[l] = log(c[l]) + ψ*log(h_grid[l]) + continuation_value[l];
+        end
+
+continuation_value
+c
+k_next
+Continuation_Valuefn
+continuation_value
+continuation_value[87]
+continuation_value[84]
+k_next
+k_next[84]
+get_continuation_value(k_next[84],k_grid,Continuation_Valuefn,j)
+get_continuation_value(k_next[83],k_grid,Continuation_Valuefn,j)
+k_next[83]
+k_next[84]
+continuation_value
+t=83;
+k_next[t]<k_grid[1]
+k_next[t]>=k_grid[1] && k_next[t]<last(k_grid)
+ind = last(find(x->(x <= k_next[t]),k_grid));
+ind
+cont_value = ((k_next[t]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+        + ((k_grid[ind+1]-k_next[t])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+Continuation_Valuefn[ind+1,j]
+Continuation_Valuefn[ind,j]
+Continuation_Valuefn[ind-1,j]
+Continuation_Valuefn[ind+2,j]
+k_grid[ind]
+k_next[t]
+k_grid[ind+1]
+k_grid[ind+2]
+t=84
+ind = last(find(x->(x <= k_next[t]),k_grid));
+ind
+Continuation_Valuefn[ind+1,j]
+Continuation_Valuefn[ind,j]
+((k_next[t]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))
+k_next[t]
+k_grid[ind]
+((k_grid[ind+1]-k_next[t])/(k_grid[ind+1]-k_grid[ind]))
+cont_value = ((k_next[t]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+        + ((k_grid[ind+1]-k_next[t])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+   
+cont_value
+((k_next[t]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+((k_grid[ind+1]-k_next[t])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j]
+((k_next[t]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+        + ((k_grid[ind+1]-k_next[t])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j]
+((k_next[t]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j] + ((k_grid[ind+1]-k_next[t])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j]
+cont_value = ((k_next[t]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j] + ((k_grid[ind+1]-k_next[t])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+    
+cont_value
+Valuefn
+Continuation_Valuefn = zeros(size(Valuefn));
+for i in 1:size(Valuefn,1)
+    for j in 1:size(Valuefn,2)
+        Continuation_Valuefn[i,j] = β*P_z[j,:]'*Valuefn[i,:];
+    end
+end
+
+CheckIsSorted(Continuation_Valuefn)
+Continuation_Valuefn
+Valuefn_Next = zeros(size(Valuefn));
+# First calculate expected value of value function for all discrete (k,z)
+Continuation_Valuefn = zeros(size(Valuefn));
+for i in 1:size(Valuefn,1)
+    for j in 1:size(Valuefn,2)
+        Continuation_Valuefn[i,j] = β*P_z[j,:]'*Valuefn[i,:];
+    end
+end
+for i in 1:size(Valuefn,1)
+    for j in 1:size(Valuefn,2)
+        c = zeros(length(h_grid)); # Current consumption choices for each 'h'
+        k_next = zeros(length(h_grid)); # Next period capital for each 'h'
+        continuation_value = zeros(length(h_grid)); # Expected continuation value
+        total_utility = zeros(length(h_grid)); # Sum of current period utility and continuation value
+        for l in 1:length(h_grid)
+            c[l] = ((1-θ)*(1-h_grid[l])*(k_grid[i]^θ)*exp(z_array[j]*(1-θ))*h_grid[l]^(-1*θ))/ψ; # consumption from labor-leisure condition
+            k_next[l] = ((k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ)) + (1-δ)*k_grid[i] - c[l])/((1+γ_n)*(1+γ_z)); # next period capital from resource constraint
+            if k_next[l]>=((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z))
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+               #=
+               if k_next[l]<k_grid[1]
+                  continuation_value[l] = (k_next[l]/k_grid[1])*Continuation_Valuefn[1,j];
+               elseif k_next[l]>=k_grid[1] && k_next[l]<last(k_grid)
+                      ind = last(find(x->(x <= k_next[l]),k_grid));
+                      continuation_value[l] = ((k_next[l]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+                      + ((k_grid[ind+1]-k_next[l])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+               elseif k_next[l]>=last(k_grid)
+                      continuation_value[l] = Continuation_Valuefn[length(k_grid),j];
+               end
+                =#
+            else
+                #continuation_value[l] = -Inf;
+                ## Non-negative investment x_t>=0
+                k_next[l] = ((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z));
+                c[l] = (k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ));
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+            end
+        end
+        for l in 1:length(h_grid)
+        total_utility[l] = log(c[l]) + ψ*log(h_grid[l]) + continuation_value[l];
+        end
+        Valuefn_Next[i,j] = maximum(total_utility);
+    end
+end
+
+Valuefn_Next
+CheckIsSorted(Valuefn_Next)
+Valuefn_Next
+CheckIsSorted(Valuefn_Next)
+Valuefn_Next[:,1]'
+Valuefn_Next[:,1:10]
+v=Valuefn_Next[:,1]
+Valuefn_Next
+v
+issorted(v)
+issorted(v[3:end])
+v
+i,j=1,1
+i
+j
+Continuation_Valuefn = zeros(size(Valuefn));
+for i in 1:size(Valuefn,1)
+    for j in 1:size(Valuefn,2)
+        Continuation_Valuefn[i,j] = β*P_z[j,:]'*Valuefn[i,:];
+    end
+end
+
+c = zeros(length(h_grid)); # Current consumption choices for each 'h'
+        k_next = zeros(length(h_grid)); # Next period capital for each 'h'
+        continuation_value = zeros(length(h_grid)); # Expected continuation value
+        total_utility = zeros(length(h_grid)); # Sum of current period utility and continuation value
+        for l in 1:length(h_grid)
+            c[l] = ((1-θ)*(1-h_grid[l])*(k_grid[i]^θ)*exp(z_array[j]*(1-θ))*h_grid[l]^(-1*θ))/ψ; # consumption from labor-leisure condition
+            k_next[l] = ((k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ)) + (1-δ)*k_grid[i] - c[l])/((1+γ_n)*(1+γ_z)); # next period capital from resource constraint
+            if k_next[l]>=((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z))
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+               #=
+               if k_next[l]<k_grid[1]
+                  continuation_value[l] = (k_next[l]/k_grid[1])*Continuation_Valuefn[1,j];
+               elseif k_next[l]>=k_grid[1] && k_next[l]<last(k_grid)
+                      ind = last(find(x->(x <= k_next[l]),k_grid));
+                      continuation_value[l] = ((k_next[l]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+                      + ((k_grid[ind+1]-k_next[l])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+               elseif k_next[l]>=last(k_grid)
+                      continuation_value[l] = Continuation_Valuefn[length(k_grid),j];
+               end
+                =#
+            else
+                #continuation_value[l] = -Inf;
+                ## Non-negative investment x_t>=0
+                k_next[l] = ((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z));
+                c[l] = (k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ));
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+            end
+        end
+        for l in 1:length(h_grid)
+        total_utility[l] = log(c[l]) + ψ*log(h_grid[l]) + continuation_value[l];
+        end
+continuation_value
+issorted(continuation_value)
+total_utility
+continuation_value1 = continuation_value;
+total_utility1 = total_utility
+c1=c
+k_next1=k_next
+i,j=2,1
+  c = zeros(length(h_grid)); # Current consumption choices for each 'h'
+        k_next = zeros(length(h_grid)); # Next period capital for each 'h'
+        continuation_value = zeros(length(h_grid)); # Expected continuation value
+        total_utility = zeros(length(h_grid)); # Sum of current period utility and continuation value
+        for l in 1:length(h_grid)
+            c[l] = ((1-θ)*(1-h_grid[l])*(k_grid[i]^θ)*exp(z_array[j]*(1-θ))*h_grid[l]^(-1*θ))/ψ; # consumption from labor-leisure condition
+            k_next[l] = ((k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ)) + (1-δ)*k_grid[i] - c[l])/((1+γ_n)*(1+γ_z)); # next period capital from resource constraint
+            if k_next[l]>=((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z))
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+               #=
+               if k_next[l]<k_grid[1]
+                  continuation_value[l] = (k_next[l]/k_grid[1])*Continuation_Valuefn[1,j];
+               elseif k_next[l]>=k_grid[1] && k_next[l]<last(k_grid)
+                      ind = last(find(x->(x <= k_next[l]),k_grid));
+                      continuation_value[l] = ((k_next[l]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+                      + ((k_grid[ind+1]-k_next[l])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+               elseif k_next[l]>=last(k_grid)
+                      continuation_value[l] = Continuation_Valuefn[length(k_grid),j];
+               end
+                =#
+            else
+                #continuation_value[l] = -Inf;
+                ## Non-negative investment x_t>=0
+                k_next[l] = ((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z));
+                c[l] = (k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ));
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+            end
+        end
+        for l in 1:length(h_grid)
+        total_utility[l] = log(c[l]) + ψ*log(h_grid[l]) + continuation_value[l];
+        end
+      
+continuation_value
+issorted(continuation_value)
+max(continuation_value,continuation_value1)
+max(continuation_value,continuation_value1)-continuation_value
+continuation_value
+continuation_value1
+continuation_value
+i
+i,j=1,1
+i
+j
+  c = zeros(length(h_grid)); # Current consumption choices for each 'h'
+        k_next = zeros(length(h_grid)); # Next period capital for each 'h'
+        continuation_value = zeros(length(h_grid)); # Expected continuation value
+        total_utility = zeros(length(h_grid)); # Sum of current period utility and continuation value
+        for l in 1:length(h_grid)
+            c[l] = ((1-θ)*(1-h_grid[l])*(k_grid[i]^θ)*exp(z_array[j]*(1-θ))*h_grid[l]^(-1*θ))/ψ; # consumption from labor-leisure condition
+            k_next[l] = ((k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ)) + (1-δ)*k_grid[i] - c[l])/((1+γ_n)*(1+γ_z)); # next period capital from resource constraint
+            if k_next[l]>=((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z))
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+               #=
+               if k_next[l]<k_grid[1]
+                  continuation_value[l] = (k_next[l]/k_grid[1])*Continuation_Valuefn[1,j];
+               elseif k_next[l]>=k_grid[1] && k_next[l]<last(k_grid)
+                      ind = last(find(x->(x <= k_next[l]),k_grid));
+                      continuation_value[l] = ((k_next[l]-k_grid[ind])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind+1,j]
+                      + ((k_grid[ind+1]-k_next[l])/(k_grid[ind+1]-k_grid[ind]))*Continuation_Valuefn[ind,j];
+               elseif k_next[l]>=last(k_grid)
+                      continuation_value[l] = Continuation_Valuefn[length(k_grid),j];
+               end
+                =#
+            else
+                #continuation_value[l] = -Inf;
+                ## Non-negative investment x_t>=0
+                k_next[l] = ((1-δ)*k_grid[i])/((1+γ_n)*(1+γ_z));
+                c[l] = (k_grid[i]^θ)*((exp(z_array[j])*h_grid[l])^(1-θ));
+                continuation_value[l] = get_continuation_value(k_next[l],k_grid,Continuation_Valuefn,j);
+            end
+        end
+        for l in 1:length(h_grid)
+        total_utility[l] = log(c[l]) + ψ*log(h_grid[l]) + continuation_value[l];
+        end
+      
+continuation_value
+Valuefn
+CheckIsSorted(Valuefn)
+CheckIsSorted(Continuation_Valuefn)
+Continuation_Valuefn
+c[l]
+c
+k_next
+issorted(k_next)
+continuation_value
+continuation_value[20:30]
+continuation_value[28:29]
+k_next[28:29]
+get_continuation_value(k_next[28],k_grid,Continuation_Valuefn,j)
+get_continuation_value(k_next[29],k_grid,Continuation_Valuefn,j)
+t=28
+k_next[t]
+k_next[t+1]
+k_next[t]<k_grid[1]
+k_next[t+1]<k_grid[1]
+slope = (Continuation_Valuefn[2,j]-Continuation_Valuefn[1,j])/(k_grid[2]-k_grid[1]);
+         cont_value = Continuation_Valuefn[1,j] - slope*(k_grid[1]-k_next[t]);
+    
+cont_value
+t
+t=29
+slope = (Continuation_Valuefn[2,j]-Continuation_Valuefn[1,j])/(k_grid[2]-k_grid[1]);
+         cont_value = Continuation_Valuefn[1,j] - slope*(k_grid[1]-k_next[t]);
+    
+cont_value
+iter
+ss_diff
+ss_diff
+Valuefn
+CheckIsSorted(Valuefn)
+Valuefn1=Valuefn
+minimum(2.3,3.4)
+min(2.3,3.4)
+Valuefn
+Valuefn1
+Valuefn
+h_policy
+c_policy
+k_next_policy
+CheckIsSorted(k_next_policy)
+k_next_policy
+k_next_policy[1,:]
+z_path
+z_array
+z_array[21]
+z_path
+z_path[70:100]
+z_path[40:70]
+z_path[10:40]
+P_z
+P_z
+sum(P_z,2)
+P_z
+P_z
+P_z
+P_z_cdf
+P_z
+P_z_cdf
+P_z_cdf[1,1]=0
+P_z_cdf
+P_z
+a=P_z;
+a[1,1]=1
+P_z
+P_z_cdf[1,1]=2;
+P_z_cdf
+P_z
+b=zeros(P_z);
+b=P_z;
+b[1,1]=3;
+b
+P_z
+b===P_z
+a=3
+b=3
+b===P_z
+b=P_z
+b===P_z
+c=b
+c===P_z
+c=zeros(P_z)
+P_z
+c===P_z
+a=3
+b=a
+b===a
+b=4
+a
+b===a
+a=3
+b==a
+b
+a=4
+b==a
+b===a
+P_z
+P_z_pdf
+P_z_cdf
+P_z_cdf[1,1]=5
+P_z
+P_z_cdf
+P_z
+P_z
+P_z_cdf
+z_path
+k_next_policy
+k_grid
+k_ss
+k_next_policy
+Valuefn
+ϵ
+Normal(0,0.0)
+len_z_array
+reshape(1,1,1)
